@@ -1,0 +1,92 @@
+{
+  "drug_interactions": {
+    "common_medications": {
+      "lisinopril": {
+        "drug_class": "ACE_inhibitor",
+        "interactions": {
+          "NSAIDs": {
+            "severity": "MODERATE",
+            "effects": [
+              "reduced blood pressure control",
+              "increased risk of kidney problems"
+            ],
+            "recommendation": "Monitor blood pressure and kidney function",
+            "affected_medications": [
+              "ibuprofen",
+              "naproxen",
+              "aspirin"
+            ]
+          },
+          "potassium_supplements": {
+            "severity": "SEVERE",
+            "effects": [
+              "hyperkalemia risk",
+              "cardiac arrhythmia risk"
+            ],
+            "recommendation": "Regular potassium level monitoring required"
+          }
+        },
+        "monitoring_required": true,
+        "standard_precautions": [
+          "monitor blood pressure",
+          "check kidney function"
+        ]
+      },
+      "metformin": {
+        "drug_class": "biguanide",
+        "interactions": {
+          "contrast_media": {
+            "severity": "SEVERE",
+            "effects": ["increased risk of lactic acidosis"],
+            "recommendation": "Stop metformin 48h before and after procedure"
+          }
+        },
+        "monitoring_required": true,
+        "standard_precautions": [
+          "monitor kidney function",
+          "check vitamin B12 levels annually"
+        ]
+      }
+    },
+    "drug_classes": {
+      "NSAIDs": {
+        "medications": [
+          "ibuprofen",
+          "naproxen",
+          "aspirin"
+        ],
+        "class_warnings": [
+          "bleeding risk",
+          "gastrointestinal effects"
+        ]
+      },
+      "ACE_inhibitors": {
+        "medications": [
+          "lisinopril",
+          "enalapril",
+          "ramipril"
+        ],
+        "class_warnings": [
+          "kidney function",
+          "potassium levels"
+        ]
+      }
+    },
+    "severity_levels": {
+      "MILD": {
+        "description": "Minor interaction - monitor",
+        "action_required": false
+      },
+      "MODERATE": {
+        "description": "Significant interaction - caution",
+        "action_required": true,
+        "monitoring_suggested": true
+      },
+      "SEVERE": {
+        "description": "Serious interaction - avoid combination",
+        "action_required": true,
+        "monitoring_required": true
+      }
+    }
+  }
+}

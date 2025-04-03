@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: MedicationInteractionCheck
+  version: 1.0.0
+  description: API for checking medication interactions and managing patient prescriptions
+
+# Added security definitions
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+# Added global security requirement
+security:
+  - BearerAuth: []
+
+paths:
+  "/patient/medications/{patientId}":
+    get:
+      summary: Get patient's current medications
+      description: Retrieves current medications for the specified patient
+      operationId: getPatientMedications
+      parameters:
+      - name: patientId
+        in: path
+        description: ID of the patient to check
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved patient medications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [SUCCESS, NOT_FOUND]
+                  patientId:
+                    type: string
+                  currentMedications:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        dosage:
+                          type: string
+                        frequency:
+                          type: string
+    
+    post:
+      summary: Check medication interaction
+      description: Checks interactions between proposed medication and current medications
+      operationId: checkMedicationInteraction
+      parameters:
+      - name: patientId
+        in: path
+        description: ID of the patient
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                proposed_medication:
+                  type: string
+                  description: Name of medication to check
+              required:
+                - proposed_medication
+      responses:
+        '200':
+          description: Successfully checked interactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [SUCCESS, ERROR]
+                  message:
+                    type: string
+                  checkDetails:
+                    type: object
+                    properties:
+                      timestamp:
+                        type: string
+                      proposed_med:
+                        type: string
+                      result:
+                        type: string
+                      details:
+                        type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [ERROR]
+                  message:
+                    type: string
