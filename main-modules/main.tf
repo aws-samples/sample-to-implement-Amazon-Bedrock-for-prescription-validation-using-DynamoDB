@@ -72,8 +72,8 @@ module "dynamodb" {
 
 
 # main.tf in root folder
-module "opensearch" {
-  source = "../sub-modules/5-opensearch"
+module "bedrockrole" {
+  source = "../sub-modules/5-bedrock-role"
   
   collection_name = "bedrock-collection"
   project_name    = var.project_name
