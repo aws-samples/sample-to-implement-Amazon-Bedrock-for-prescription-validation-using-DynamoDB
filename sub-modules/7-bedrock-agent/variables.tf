@@ -15,10 +15,10 @@ variable "knowledge_base_id" {
   type        = string
 }
 
-variable "knowledge_base_arn" {
-  description = "Bedrock Knowledge Base ARN"
-  type        = string
-}
+# variable "knowledge_base_arn" {
+#   description = "Bedrock Knowledge Base ARN"
+#   type        = string
+# }
 
 
 variable "kb_instructions_for_agent" {

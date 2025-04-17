@@ -142,20 +142,20 @@ resource "aws_iam_role_policy" "s3_access" {
 # }
 
 
-resource "aws_iam_role_policy" "kb_Access" {
-  name = "OpensearchServerlessAccessPolicy"
-  role = aws_iam_role.kb_role.id
+# resource "aws_iam_role_policy" "kb_Access" {
+#   name = "OpensearchServerlessAccessPolicy"
+#   role = aws_iam_role.kb_role.id
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "aoss:APIAccessAll"
-        ]
-        Resource = "${var.collection_arn}"
-      }
-    ]
-  })
-}
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Action = [
+#           "aoss:APIAccessAll"
+#         ]
+#         Resource = "${var.collection_arn}"
+#       }
+#     ]
+#   })
+# }

@@ -20,8 +20,9 @@ Use Knowledge Base to verify interactions. List severity, effects, and monitorin
 EOT
 }
 
-# variable "function_name" {
-#   description = "Function name"
-#   type        = string
-# }
+variable "kb_id" {
+  description = "KB ID of Kendra GenAI Index"
+  type        = string
+  default     = "ZFFQHJNRQF"
+}
 

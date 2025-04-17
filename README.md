@@ -37,15 +37,35 @@ The solution consists of:
 1. Clone the repository:
 ```bash
 git clone git@ssh.gitlab.aws.dev:my-group-aditranj/terraform-dynamodb-genai-blog.git
-cd terraform-dynamodb-genai-blog
+cd     prescription-validation-with-Bedrock-using-DynamoDB
 ```
 
-2. Deploy with Terraform:
+2. Update Knowledge Base Id in variables.tf file with Knowledge Base ID:
+```bash
+cd prescription-validation-with-Bedrock-using-DynamoDB/main-modules
+```
+
+```bash
+# In main-module/variables.tf
+variable "kb_id" {
+  description = "KB ID of Kendra GenAI Index"
+  type        = string
+  default     = " " # Replace with your noted ID 
+}
+```
+
+3. Deploy with Terraform:
 ```bash
 terraform init
 terraform plan
 terraform apply
 ```
+
+4. Get the S3 bucket name deployed by terraform The bucket name will be in format:` bedrock-agent-kb-{8 digit-random-suffix}`
+
+5. Configure S3 as Data Source for knowledge base created in pre-requisite, follow the instructions in [Connect to Amazon S3 for your knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/s3-data-source-connector.html)
+
+6. Associate the knowledge base with the agent created by terraform ‘terraformPrescriptionValidation-namecheck-update-agent’. For more information, follow [this](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-kb-add.html) to add a knowledge base to the agent.
 
 ## Features
 
@@ -60,8 +80,7 @@ terraform apply
 
 The DynamoDB table uses:
 - Partition key: PatientID
-- Sort key: RecordType
-- Medication records with 'MED#' prefix
+- Sort key: Medication
 - Interaction check history
 
 ## Limitations

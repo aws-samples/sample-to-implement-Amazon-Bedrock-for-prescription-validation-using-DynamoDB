@@ -1,89 +1,89 @@
 
-# Encryption Security Policy
-resource "aws_opensearchserverless_security_policy" "encryption" {
-  name = "encryption-policy"
-  type = "encryption"
+# # Encryption Security Policy
+# resource "aws_opensearchserverless_security_policy" "encryption" {
+#   name = "encryption-policy"
+#   type = "encryption"
   
-  policy = jsonencode({
-    Rules = [
-      {
-        Resource = [
-          "collection/${var.collection_name}"
-        ]
-        ResourceType = "collection"
-      }
-    ],
-    AWSOwnedKey = true
-  })
-}
+#   policy = jsonencode({
+#     Rules = [
+#       {
+#         Resource = [
+#           "collection/${var.collection_name}"
+#         ]
+#         ResourceType = "collection"
+#       }
+#     ],
+#     AWSOwnedKey = true
+#   })
+# }
 
-# Network Security Policy
-resource "aws_opensearchserverless_security_policy" "network" {
-  name = "network-policy"
-  type = "network"
+# # Network Security Policy
+# resource "aws_opensearchserverless_security_policy" "network" {
+#   name = "network-policy"
+#   type = "network"
   
-  policy = jsonencode([
-    {
-      Rules = [
-        {
-          ResourceType = "collection"
-          Resource = [
-            "collection/${var.collection_name}"
-          ]
-        },
-        {
-          ResourceType = "dashboard"
-          Resource = [
-            "collection/${var.collection_name}"
-          ]
-        }
-      ]
-      AllowFromPublic = true
-    }
-  ])
-}
+#   policy = jsonencode([
+#     {
+#       Rules = [
+#         {
+#           ResourceType = "collection"
+#           Resource = [
+#             "collection/${var.collection_name}"
+#           ]
+#         },
+#         {
+#           ResourceType = "dashboard"
+#           Resource = [
+#             "collection/${var.collection_name}"
+#           ]
+#         }
+#       ]
+#       AllowFromPublic = true
+#     }
+#   ])
+# }
 
-# Data Access Policy
-# Data Access Policy
-resource "aws_opensearchserverless_access_policy" "access" {
-  name = "access-policy"
-  type = "data"
+# # Data Access Policy
+# # Data Access Policy
+# resource "aws_opensearchserverless_access_policy" "access" {
+#   name = "access-policy"
+#   type = "data"
   
-  policy = jsonencode([
-    {
-      Description = "Access policy for OpenSearch collection",
-      Rules = [
-        {
-          ResourceType = "index",
-          Resource = ["index/${var.collection_name}/*"],
-          Permission = [
-            "aoss:ReadDocument",
-            "aoss:WriteDocument",
-            "aoss:CreateIndex",
-            "aoss:DeleteIndex",
-            "aoss:UpdateIndex",
-            "aoss:DescribeIndex"
-          ]
-        },
-        {
-          ResourceType = "collection",
-          Resource = ["collection/${var.collection_name}"],
-          Permission = [
-            "aoss:CreateCollectionItems",
-            "aoss:DeleteCollectionItems",
-            "aoss:UpdateCollectionItems"
-          ]
-        }
-      ],
-      Principal = [
-        "${var.knowledge_base_role_arn}",
-        data.aws_caller_identity.this.arn,
-        "arn:aws:iam::${data.aws_caller_identity.this.account_id}:role/aws-service-role/bedrock.amazonaws.com/AWSServiceRoleForAmazonBedrock",
-        "arn:aws:iam::354116860249:role/aditranj-testing"
-      ]
-    }
-  ])
-}
+#   policy = jsonencode([
+#     {
+#       Description = "Access policy for OpenSearch collection",
+#       Rules = [
+#         {
+#           ResourceType = "index",
+#           Resource = ["index/${var.collection_name}/*"],
+#           Permission = [
+#             "aoss:ReadDocument",
+#             "aoss:WriteDocument",
+#             "aoss:CreateIndex",
+#             "aoss:DeleteIndex",
+#             "aoss:UpdateIndex",
+#             "aoss:DescribeIndex"
+#           ]
+#         },
+#         {
+#           ResourceType = "collection",
+#           Resource = ["collection/${var.collection_name}"],
+#           Permission = [
+#             "aoss:CreateCollectionItems",
+#             "aoss:DeleteCollectionItems",
+#             "aoss:UpdateCollectionItems"
+#           ]
+#         }
+#       ],
+#       Principal = [
+#         "${var.knowledge_base_role_arn}",
+#         data.aws_caller_identity.this.arn,
+#         "arn:aws:iam::${data.aws_caller_identity.this.account_id}:role/aws-service-role/bedrock.amazonaws.com/AWSServiceRoleForAmazonBedrock",
+#         "arn:aws:iam::354116860249:role/aditranj-testing"
+#       ]
+#     }
+#   ])
+# }
 
 
 
@@ -114,30 +114,30 @@ resource "aws_iam_role" "bedrock_role" {
   })
 }
 
-resource "aws_iam_role_policy" "opensearch_serverless_access" {
-  name = "OpensearchServerlessAccessPolicy"
-  role = aws_iam_role.bedrock_role.id
+# resource "aws_iam_role_policy" "opensearch_serverless_access" {
+#   name = "OpensearchServerlessAccessPolicy"
+#   role = aws_iam_role.bedrock_role.id
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "aoss:DashboardsAccessAll",
-          "aoss:CreateCollection",
-          "aoss:DeleteCollection",
-          "aoss:UpdateCollection",
-          "aoss:GetCollection",
-          "aoss:CreateAccessPolicy",
-          "aoss:CreateSecurityPolicy",
-          "aoss:APIAccessAll"
-        ]
-        Resource = "arn:aws:aoss:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:collection/*"
-      }
-    ]
-  })
-}
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Action = [
+#           "aoss:DashboardsAccessAll",
+#           "aoss:CreateCollection",
+#           "aoss:DeleteCollection",
+#           "aoss:UpdateCollection",
+#           "aoss:GetCollection",
+#           "aoss:CreateAccessPolicy",
+#           "aoss:CreateSecurityPolicy",
+#           "aoss:APIAccessAll"
+#         ]
+#         Resource = "arn:aws:aoss:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:collection/*"
+#       }
+#     ]
+#   })
+# }
 
 
 resource "aws_iam_role_policy" "bedrock_access" {
@@ -185,73 +185,73 @@ resource "aws_iam_role_policy" "s3_access" {
 }
 
 
-# OpenSearch Serverless Collection
-resource "aws_opensearchserverless_collection" "main" {
-  name = "${var.collection_name}"
-  type = "VECTORSEARCH"
-  description = "Collection for vector search data"
+# # OpenSearch Serverless Collection
+# resource "aws_opensearchserverless_collection" "main" {
+#   name = "${var.collection_name}"
+#   type = "VECTORSEARCH"
+#   description = "Collection for vector search data"
   
-  depends_on = [
-    aws_opensearchserverless_security_policy.encryption,
-    aws_opensearchserverless_security_policy.network,
-    aws_opensearchserverless_access_policy.access
-  ]
+#   # depends_on = [
+#   #   aws_opensearchserverless_security_policy.encryption,
+#   #   aws_opensearchserverless_security_policy.network,
+#   #   aws_opensearchserverless_access_policy.access
+#   # ]
 
-  tags = {
-    Name        = var.collection_name
-    Project     = var.project_name
-  }
-}
+#   tags = {
+#     Name        = var.collection_name
+#     Project     = var.project_name
+#   }
+# }
 
-resource "time_sleep" "opensearch_initialization" {
-  depends_on = [aws_opensearchserverless_collection.main]
-  create_duration = "60s"
-}
+# resource "time_sleep" "opensearch_initialization" {
+#   depends_on = [aws_opensearchserverless_collection.main]
+#   create_duration = "60s"
+# }
 
 
-# OpenSearch Vector Index
-resource "opensearch_index" "vector_index" {
-  depends_on = [
-    time_sleep.opensearch_initialization,
-    aws_opensearchserverless_collection.main,
-    aws_opensearchserverless_access_policy.access
-  ]
-  name                           = "bedrock-knowledge-base-default-index"
-  number_of_shards               = "2"
-  number_of_replicas             = "1"
-  index_knn                      = true
-  index_knn_algo_param_ef_search = "512"
-  mappings                       = <<-EOF
-    {
-      "properties": {
-        "bedrock-knowledge-base-default-vector": {
-          "type": "knn_vector",
-          "dimension": "1024",
-          "method": {
-            "name": "hnsw",
-            "engine": "FAISS",
-            "parameters": {
-              "m": 16,
-              "ef_construction": 512
-            },
-            "space_type": "l2"
-          }
-        },
-        "AMAZON_BEDROCK_METADATA": {
-          "type": "text",
-          "index": "false"
-        },
-        "AMAZON_BEDROCK_TEXT_CHUNK": {
-          "type": "text",
-          "index": "true"
-        }
-      }
-    }
-  EOF
-  lifecycle {
-    ignore_changes = all
-  }
-  force_destroy = true
-}
+# # OpenSearch Vector Index
+# resource "opensearch_index" "vector_index" {
+#   depends_on = [
+#     time_sleep.opensearch_initialization,
+#     aws_opensearchserverless_collection.main,
+#     aws_opensearchserverless_access_policy.access
+#   ]
+#   name                           = "bedrock-knowledge-base-default-index"
+#   number_of_shards               = "2"
+#   number_of_replicas             = "1"
+#   index_knn                      = true
+#   index_knn_algo_param_ef_search = "512"
+#   mappings                       = <<-EOF
+#     {
+#       "properties": {
+#         "bedrock-knowledge-base-default-vector": {
+#           "type": "knn_vector",
+#           "dimension": "1024",
+#           "method": {
+#             "name": "hnsw",
+#             "engine": "FAISS",
+#             "parameters": {
+#               "m": 16,
+#               "ef_construction": 512
+#             },
+#             "space_type": "l2"
+#           }
+#         },
+#         "AMAZON_BEDROCK_METADATA": {
+#           "type": "text",
+#           "index": "false"
+#         },
+#         "AMAZON_BEDROCK_TEXT_CHUNK": {
+#           "type": "text",
+#           "index": "true"
+#         }
+#       }
+#     }
+#   EOF
+#   lifecycle {
+#     ignore_changes = all
+#   }
+#   force_destroy = true
+# }
 
 

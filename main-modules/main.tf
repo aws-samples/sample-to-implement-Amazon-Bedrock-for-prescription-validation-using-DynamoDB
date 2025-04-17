@@ -3,7 +3,7 @@ module "iam" {
   function_name     = "${var.project_name}-bedrock-agent-lambda"
   project_name      = var.project_name
   dynamodb_arn      = module.dynamodb.table_arn #change name as needed
-  collection_arn    = module.opensearch.collection_arn
+  # collection_arn    = module.opensearch.collection_arn
   bucket_name       = module.bucket_for_knowledgebase_data_source.bucket_id
   # bedrock_agent_arn = module.bedrock_agent_and_action_group.bedrock_agent_arn #change name as needed
   depends_on = [
@@ -14,7 +14,7 @@ module "iam" {
 
 module "bucket_for_knowledgebase_data_source" {
     source              = "../sub-modules/2-s3-bucket"
-    bucket_name         = "bedrock-agent-kb-${var.bucket_name}"
+    bucket_name         = "${var.bucket_name}"
     project_name        = var.project_name
 }
 
@@ -82,15 +82,15 @@ module "opensearch" {
 
 
 # main.tf in root folder
-module "knowledge_base" {
-  source = "../sub-modules/6-knowledge_base"
-  name           = "kb-agent-kb"
-  project_name   = var.project_name
-  collection_arn = module.opensearch.collection_arn
-  kb_role_arn    = module.iam.role_arn
-  s3_bucket_arn  = module.bucket_for_knowledgebase_data_source.bucket_arn
-  depends_on = [module.opensearch]
-}
+# module "knowledge_base" {
+#   source = "../sub-modules/6-knowledge_base"
+#   name           = "kb-agent-kb"
+#   project_name   = var.project_name
+#   collection_arn = module.opensearch.collection_arn
+#   kb_role_arn    = module.iam.role_arn
+#   s3_bucket_arn  = module.bucket_for_knowledgebase_data_source.bucket_arn
+#   depends_on = [module.opensearch]
+# }
 
 
 module "bedrock_agent_and_action_group" {
@@ -98,9 +98,9 @@ module "bedrock_agent_and_action_group" {
   function_name_lambda = "${var.project_name}-lambda-function"
   lambda_role_arn = module.iam.lambda_role_arn
   project_name   = var.project_name
-  knowledge_base_id = module.knowledge_base.knowledge_base_id
+  knowledge_base_id = var.kb_id
   kb_instructions_for_agent = var.kb_instructions_for_agent
-  knowledge_base_arn = module.knowledge_base.knowledge_base_arn
+  # knowledge_base_arn = module.knowledge_base.knowledge_base_arn
 }
 
 

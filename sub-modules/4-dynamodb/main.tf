@@ -2,7 +2,7 @@ resource "aws_dynamodb_table" "main" {
   name           = "${var.project_name}-${var.table_name}"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "PatientID"
-  range_key      = "RecordType"
+  range_key      = "Medication"
   point_in_time_recovery {
     enabled = true
   } 
@@ -13,7 +13,7 @@ resource "aws_dynamodb_table" "main" {
   }
 
   attribute {
-    name = "RecordType"
+    name = "Medication"
     type = "S"
   }
 
@@ -28,11 +28,11 @@ resource "aws_dynamodb_table_item" "sample_patients" {
 
   table_name = aws_dynamodb_table.main.name
   hash_key   = "PatientID"
-  range_key  = "RecordType"
+  range_key  = "Medication"
 
   item = jsonencode({
     PatientID = { S = each.value.PatientID }
-    RecordType = { S = "MED#${each.value.MedicationName}" }
+    Medication = { S = each.value.MedicationName }
     Dosage = { S = each.value.Dosage }
     Frequency = { S = each.value.Frequency }
     StartDate = { S = each.value.StartDate }

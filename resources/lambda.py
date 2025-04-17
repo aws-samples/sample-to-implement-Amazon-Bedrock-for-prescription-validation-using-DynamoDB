@@ -7,14 +7,13 @@ import os
 TABLE_NAME = os.environ['DYNAMODB_TABLE_NAME']
 
 def get_patient_medications(client, table_name, patient_id):
-    """Get patient's current medications using MED# prefix"""
+    """Get patient's current medications"""
     try:
         response = client.query(
             TableName=table_name,
-            KeyConditionExpression='PatientID = :pid AND begins_with(RecordType, :prefix)',
+            KeyConditionExpression='PatientID = :pid',
             ExpressionAttributeValues={
-                ':pid': {'S': patient_id},
-                ':prefix': {'S': 'MED#'}
+                ':pid': {'S': patient_id}
             }
         )
         return response
@@ -30,7 +29,7 @@ def record_interaction_check(client, table_name, patient_id, med_name, check_det
             TableName=table_name,
             Key={
                 'PatientID': {'S': patient_id},
-                'RecordType': {'S': f"MED#{med_name}"}
+                'Medication': {'S': med_name}
             },
             UpdateExpression='SET InteractionChecks = list_append(if_not_exists(InteractionChecks, :empty_list), :new_check)',
             ExpressionAttributeValues={
@@ -88,7 +87,7 @@ def lambda_handler(event, context):
                             'patientId': patient_id,
                             'currentMedications': [
                                 {
-                                    'name': item['RecordType']['S'].split('#')[1],
+                                    'name': item['Medication']['S'],
                                     'dosage': item.get('Dosage', {}).get('S', ''),
                                     'frequency': item.get('Frequency', {}).get('S', ''),
                                     'interactionChecks': [
@@ -145,7 +144,7 @@ def lambda_handler(event, context):
 
             # Record the interaction check for each current medication
             for item in response['Items']:
-                current_med = item['RecordType']['S'].split('#')[1]
+                current_med = item['Medication']['S']
                 record_interaction_check(
                     client,
                     table_name,

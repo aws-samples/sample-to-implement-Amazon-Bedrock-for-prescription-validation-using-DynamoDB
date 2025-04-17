@@ -14,10 +14,10 @@ variable "dynamodb_arn" {
   type        = string
 }
 
-variable "collection_arn" {
-  description = "OS Collection ARN"
-  type        = string
-}
+# variable "collection_arn" {
+#   description = "OS Collection ARN"
+#   type        = string
+# }
 
 
 variable "bucket_name" {
