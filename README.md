@@ -31,6 +31,13 @@ The solution consists of:
 - [AWS CLI installed and configured](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - [Terraform installed](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - [Git installed](https://git-scm.com/downloads)
+- Amazon Bedrock knowledge base set up with a structured data store. Use the following:
+  - [Prerequisites for creating an Amazon Bedrock knowledge base with a structured data store](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-prereq-structured.html)
+  - [Create a knowledge base by connecting to a structured data store](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-structured-create.html)
+- Note down the Knowledge base ID
+
+Note: This solution uses Amazon Redshift as the structured data store for the knowledge base, with data loaded from an Amazon S3 bucket created during the Terraform deployment.
+
 
 ## Deployment
 
@@ -54,7 +61,7 @@ variable "kb_id" {
 }
 ```
 
-3. Deploy with Terraform:
+3. Deploy with Terraform
 ```bash
 terraform init
 terraform plan
@@ -63,9 +70,13 @@ terraform apply
 
 4. Get the S3 bucket name deployed by terraform The bucket name will be in format:` bedrock-agent-kb-{8 digit-random-suffix}`
 
-5. Configure S3 as Data Source for knowledge base created in pre-requisite, follow the instructions in [Connect to Amazon S3 for your knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/s3-data-source-connector.html)
+5.	Load data from file sample_medical_validation.json present in S3 bucket in Amazon Redshift. Follow [Loading data from Amazon S3](https://docs.aws.amazon.com/redshift/latest/mgmt/query-editor-v2-loading-data.html) into an existing or new table in Amazon Redshift.
 
-6. Associate the knowledge base with the agent created by terraform ‘terraformPrescriptionValidation-namecheck-update-agent’. For more information, follow [this](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-kb-add.html) to add a knowledge base to the agent.
+6.	[Allow your Amazon Bedrock Knowledge Bases service role to access your data store](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-prereq-structured-db-access.html)
+
+7.	[Sync your structured data store with your Amazon Bedrock knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/kb-data-source-structured-sync-ingest.html)
+
+8. Associate the knowledge base with the agent created by terraform ‘terraformPrescriptionValidation-namecheck-update-agent’. For more information, follow [this](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-kb-add.html) to add a knowledge base to the agent.
 
 ## Features
 

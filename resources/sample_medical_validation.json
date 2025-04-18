@@ -1,92 +1,10 @@
-{
-  "drug_interactions": {
-    "common_medications": {
-      "lisinopril": {
-        "drug_class": "ACE_inhibitor",
-        "interactions": {
-          "NSAIDs": {
-            "severity": "MODERATE",
-            "effects": [
-              "reduced blood pressure control",
-              "increased risk of kidney problems"
-            ],
-            "recommendation": "Monitor blood pressure and kidney function",
-            "affected_medications": [
-              "ibuprofen",
-              "naproxen",
-              "aspirin"
-            ]
-          },
-          "potassium_supplements": {
-            "severity": "SEVERE",
-            "effects": [
-              "hyperkalemia risk",
-              "cardiac arrhythmia risk"
-            ],
-            "recommendation": "Regular potassium level monitoring required"
-          }
-        },
-        "monitoring_required": true,
-        "standard_precautions": [
-          "monitor blood pressure",
-          "check kidney function"
-        ]
-      },
-      "metformin": {
-        "drug_class": "biguanide",
-        "interactions": {
-          "contrast_media": {
-            "severity": "SEVERE",
-            "effects": ["increased risk of lactic acidosis"],
-            "recommendation": "Stop metformin 48h before and after procedure"
-          }
-        },
-        "monitoring_required": true,
-        "standard_precautions": [
-          "monitor kidney function",
-          "check vitamin B12 levels annually"
-        ]
-      }
-    },
-    "drug_classes": {
-      "NSAIDs": {
-        "medications": [
-          "ibuprofen",
-          "naproxen",
-          "aspirin"
-        ],
-        "class_warnings": [
-          "bleeding risk",
-          "gastrointestinal effects"
-        ]
-      },
-      "ACE_inhibitors": {
-        "medications": [
-          "lisinopril",
-          "enalapril",
-          "ramipril"
-        ],
-        "class_warnings": [
-          "kidney function",
-          "potassium levels"
-        ]
-      }
-    },
-    "severity_levels": {
-      "MILD": {
-        "description": "Minor interaction - monitor",
-        "action_required": false
-      },
-      "MODERATE": {
-        "description": "Significant interaction - caution",
-        "action_required": true,
-        "monitoring_suggested": true
-      },
-      "SEVERE": {
-        "description": "Serious interaction - avoid combination",
-        "action_required": true,
-        "monitoring_required": true
-      }
-    }
-  }
-}
+{"record_type":"medication","medication_name":"lisinopril","drug_class":"ACE_inhibitor","monitoring_required":"true","monitoring_details":"monitor blood pressure; check kidney function"}
+{"record_type":"medication","medication_name":"metformin","drug_class":"biguanide","monitoring_required":"true","monitoring_details":"monitor kidney function; check vitamin B12 levels annually"}
+{"record_type":"interaction","primary_medication":"lisinopril","interacting_substance":"NSAIDs","severity":"MODERATE","interaction_effects":"reduced blood pressure control; increased risk of kidney problems","monitoring_recommendation":"Monitor blood pressure and kidney function","affected_medications":"ibuprofen; naproxen; aspirin"}
+{"record_type":"interaction","primary_medication":"lisinopril","interacting_substance":"potassium_supplements","severity":"SEVERE","interaction_effects":"hyperkalemia risk; cardiac arrhythmia risk","monitoring_recommendation":"Regular potassium level monitoring required"}
+{"record_type":"interaction","primary_medication":"metformin","interacting_substance":"contrast_media","severity":"SEVERE","interaction_effects":"increased risk of lactic acidosis","monitoring_recommendation":"Stop metformin 48h before and after procedure"}
+{"record_type":"drug_class","class_name":"NSAIDs","class_medications":"ibuprofen; naproxen; aspirin","class_warnings":"bleeding risk; gastrointestinal effects"}
+{"record_type":"drug_class","class_name":"ACE_inhibitors","class_medications":"lisinopril; enalapril; ramipril","class_warnings":"kidney function; potassium levels"}
+{"record_type":"severity_level","level":"MILD","description":"Minor interaction - monitor","action_required":"false","potential_effects":"minimal clinical significance; theoretical interaction","monitoring_guidance":"routine monitoring sufficient; no special monitoring required"}
+{"record_type":"severity_level","level":"MODERATE","description":"Significant interaction - caution","action_required":"true","monitoring_suggested":"true","potential_effects":"may worsen patient condition; may reduce medication effectiveness","monitoring_guidance":"regular monitoring of vital signs; periodic lab tests; watch for symptom changes"}
+{"record_type":"severity_level","level":"SEVERE","description":"Serious interaction - avoid combination","action_required":"true","monitoring_required":"true","potential_effects":"risk of serious adverse events; may cause organ damage; potentially life-threatening","monitoring_guidance":"intensive monitoring required; frequent lab tests; close clinical observation; alternative medication recommended"}
