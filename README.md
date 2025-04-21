@@ -69,6 +69,8 @@ terraform apply
 ```
 
 4. Get the S3 bucket name deployed by terraform The bucket name will be in format:` bedrock-agent-kb-{8 digit-random-suffix}`
+   - Navigate to S3 in AWS Console
+    - Look for bucket with pattern: bedrock-agent-kb-{8 digit-random-suffix}
 
 5.	Load data from file sample_medical_validation.json present in S3 bucket in Amazon Redshift. Follow [Loading data from Amazon S3](https://docs.aws.amazon.com/redshift/latest/mgmt/query-editor-v2-loading-data.html) into an existing or new table in Amazon Redshift.
 
@@ -76,7 +78,7 @@ terraform apply
 
 7.	[Sync your structured data store with your Amazon Bedrock knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/kb-data-source-structured-sync-ingest.html)
 
-8. Associate the knowledge base with the agent created by terraform ‘terraformPrescriptionValidation-namecheck-update-agent’. For more information, follow [this](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-kb-add.html) to add a knowledge base to the agent.
+8. Associate the knowledge base with the agent created by terraform ‘terraformPrescriptionValidation-namecheck-update-agent’. For more information, follow [Augment response generation for your agent with knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-kb-add.html) to add a knowledge base to the agent.
 
 ## Features
 
