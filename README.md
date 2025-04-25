@@ -26,6 +26,87 @@ The solution consists of:
 5. Provider receives results and can request documentation
 6. Lambda records interaction check in DynamoDB
 
+## Lambda Function Architecture
+
+The Lambda function serves as the critical bridge between the Amazon Bedrock agent and the DynamoDB database in this prescription validation system. Here's a detailed look at its functionality:
+
+### Key Lambda Function Components
+
+1. **Data Retrieval Operations**
+   - Fetches patient medication records using PatientID as the partition key
+   - Implements efficient query patterns to retrieve only relevant medication data
+   - Uses DynamoDB's single-digit millisecond performance for real-time responses
+
+2. **Data Processing Logic**
+   - Formats medication data for the Bedrock agent to process
+   - Structures interaction check requests for the knowledge base
+   - Transforms raw DynamoDB items into meaningful clinical information
+
+3. **Record Management**
+   - Creates audit trail entries for each interaction check
+   - Stores new prescriptions when approved
+   - Maintains historical record of all medication validations
+
+### Lambda Function Workflow
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│                 │     │                 │     │                 │
+│  Bedrock Agent  │────▶│ Lambda Function │────▶│    DynamoDB     │
+│                 │     │                 │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+        ▲                       │                       │
+        │                       │                       │
+        └───────────────────────┴───────────────────────┘
+                          Response Flow
+```
+
+## Amazon Bedrock Agent OpenAPI Integration
+
+The Amazon Bedrock agent uses [OpenAPI](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html) specifications to define the interface between the natural language processing capabilities and the Lambda function.
+
+### OpenAPI Schema
+
+The OpenAPI schema defines:
+
+1. **API Endpoints**
+   - `/getMedications` - Retrieves current medications for a patient
+   - `/checkInteractions` - Validates potential drug interactions
+   - `/recordPrescription` - Records new approved prescriptions
+   - `/getInteractionHistory` - Retrieves historical interaction checks
+
+2. **Request Parameters**
+   - PatientID (required)
+   - Medication name (required for interaction checks)
+   - Dosage information (optional)
+   - Prescriber information (optional)
+
+3. **Response Formats**
+   - Structured medication lists
+   - Interaction check results with severity levels
+   - Confirmation of recorded prescriptions
+   - Error responses with descriptive messages
+
+### Agent Action Groups
+
+The Bedrock agent is configured with action groups that map to specific API operations:
+
+1. **Medication Retrieval Group**
+   - Handles queries about current medications
+   - Maps natural language to structured API calls
+   - Formats responses for healthcare provider consumption
+
+2. **Interaction Validation Group**
+   - Processes requests to check drug interactions
+   - Leverages knowledge base for medical validation
+   - Provides detailed interaction information
+
+3. **Prescription Management Group**
+   - Handles requests to record new prescriptions
+   - Validates input data before storage
+   - Confirms successful recording of prescriptions
+
+
 ## Prerequisites
 
 - [AWS CLI installed and configured](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
