@@ -13,7 +13,7 @@ variable "sample_data" {
   description = "List of patient medications to add to the table"
   type = list(object({
     PatientID = string
-    MedicationName = string
+    Medication = string
     Dosage = string
     Frequency = string
     StartDate = string
@@ -27,20 +27,3 @@ variable "sample_data" {
   }))
   default = []
 }
-
-# variable "sample_data" {
-#   description = "List of sample patient medications to add to the table"
-#   type = list(object({
-#     PatientID = string
-#     CurrentMedications = list(object({
-#       M = object({
-#         MedicationName = object({ S = string })
-#         Dosage = object({ S = string })
-#         Frequency = object({ S = string })
-#         StartDate = object({ S = string })
-#       })
-#     }))
-#   }))
-#   default = []
-# }
-

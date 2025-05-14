@@ -35,7 +35,7 @@ module "dynamodb" {
   sample_data   = [
     {
       PatientID = "1111"
-      MedicationName = "lisinopril"
+      Medication = "lisinopril"
       Dosage = "10mg"
       Frequency = "daily"
       StartDate = "2024-01-15"
@@ -43,7 +43,7 @@ module "dynamodb" {
     },
     {
       PatientID = "2222"
-      MedicationName = "metformin"
+      Medication = "metformin"
       Dosage = "500mg"
       Frequency = "twice daily"
       StartDate = "2024-02-01"
@@ -51,7 +51,7 @@ module "dynamodb" {
     },
     {
       PatientID = "3333"
-      MedicationName = "lisinopril"
+      Medication = "lisinopril"
       Dosage = "20mg"
       Frequency = "daily"
       StartDate = "2024-02-15"
@@ -59,12 +59,12 @@ module "dynamodb" {
     },
     {
       PatientID = "3333"
-      MedicationName = "metformin"
+      Medication = "metformin"
       Dosage = "1000mg"
       Frequency = "twice daily"
       StartDate = "2024-02-15"
       InteractionChecks = []
-    }
+    },
   ]
 }
 

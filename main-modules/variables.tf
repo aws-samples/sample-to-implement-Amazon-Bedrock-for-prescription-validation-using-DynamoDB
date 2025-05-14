@@ -21,8 +21,8 @@ EOT
 }
 
 variable "kb_id" {
-  description = "KB ID of Kendra GenAI Index"
+  description = "KB ID of Redshift"
   type        = string
-  default     = "ZFFQHJNRQF"
+  default     = ""
 }
 

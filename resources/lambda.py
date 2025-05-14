@@ -14,7 +14,8 @@ def get_patient_medications(client, table_name, patient_id):
             KeyConditionExpression='PatientID = :pid',
             ExpressionAttributeValues={
                 ':pid': {'S': patient_id}
-            }
+            },
+            ConsistentRead=True  # Ensures we get the most up-to-date data
         )
         return response
     except ClientError as e:
