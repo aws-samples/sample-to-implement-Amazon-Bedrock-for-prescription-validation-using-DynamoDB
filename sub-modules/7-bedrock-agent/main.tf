@@ -187,35 +187,6 @@ resource "aws_bedrockagent_agent_action_group" "bedrock_agent_actiongroup" {
   }
 }
 
-# resource "aws_bedrockagent_agent_knowledge_base_association" "bedrock_agent_kb_association" {
-#   agent_id             = aws_bedrockagent_agent.bedrock_agent.agent_id
-#   description          = var.kb_instructions_for_agent
-#   knowledge_base_id    = var.knowledge_base_id
-#   knowledge_base_state = "ENABLED"
-# }
-
-
-# resource "null_resource" "agent_prepare" {
-#   triggers = {
-#     agent_state        = sha256(jsonencode(aws_bedrockagent_agent.bedrock_agent))
-#     action_group_state = sha256(jsonencode(aws_bedrockagent_agent_action_group.bedrock_agent_actiongroup))
-#     kb_assoc_state     = sha256(jsonencode(aws_bedrockagent_agent_knowledge_base_association.bedrock_agent_kb_association))
-#   }
-#   provisioner "local-exec" {
-#     command = "aws bedrock-agent prepare-agent --agent-id ${aws_bedrockagent_agent.bedrock_agent.id}"
-#   }
-#   depends_on = [
-#     aws_bedrockagent_agent.bedrock_agent,
-#     aws_bedrockagent_agent_action_group.bedrock_agent_actiongroup,
-#     aws_bedrockagent_agent_knowledge_base_association.bedrock_agent_kb_association
-#   ]
-# }
-
-# resource "time_sleep" "agent_api_sleep" {
-#   create_duration = "60s"
-#   depends_on      = [null_resource.agent_prepare]
-# }
-
 
 # Enabling Model Invocation logging for Amazon Bedrock Agent Interaction
 

@@ -131,31 +131,3 @@ resource "aws_iam_role_policy" "s3_access" {
     ]
   })
 }
-
-# # Resource-based policy for Bedrock
-# resource "aws_lambda_permission" "bedrock_invoke" {
-#   statement_id  = "AllowBedrockInvoke"
-#   action        = "lambda:InvokeFunction"
-#   function_name = var.function_name
-#   principal     = "bedrock.amazonaws.com"
-#   source_arn    = var.bedrock_agent_arn
-# }
-
-
-# resource "aws_iam_role_policy" "kb_Access" {
-#   name = "OpensearchServerlessAccessPolicy"
-#   role = aws_iam_role.kb_role.id
-
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Effect = "Allow"
-#         Action = [
-#           "aoss:APIAccessAll"
-#         ]
-#         Resource = "${var.collection_arn}"
-#       }
-#     ]
-#   })
-# }
