@@ -123,10 +123,6 @@ Note: This solution uses Amazon Redshift as the structured data store for the kn
 ## Deployment
 
 1. Clone the repository:
-```bash
-git clone git@ssh.gitlab.aws.dev:my-group-aditranj/terraform-dynamodb-genai-blog.git
-cd     prescription-validation-with-Bedrock-using-DynamoDB
-```
 
 2. Update Knowledge Base Id in variables.tf file with Knowledge Base ID:
 ```bash
