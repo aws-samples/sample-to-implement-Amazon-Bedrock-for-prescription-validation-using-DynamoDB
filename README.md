@@ -132,7 +132,7 @@ cd prescription-validation-with-Bedrock-using-DynamoDB/main-modules
 ```bash
 # In main-module/variables.tf
 variable "kb_id" {
-  description = "KB ID of Kendra GenAI Index"
+  description = "KB ID of Redshift"
   type        = string
   default     = " " # Replace with your noted ID 
 }
